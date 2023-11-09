@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class GuessingGame {
+    int correctGuessCount = 0;
+    int previousGuessNumber = 0;
+    public static void main(String[] args) {
+        playGame();
+    }
+
+    public static void playGame() {
+        int randomNumber = generateRandomNumber(1, 100);
+        boolean isCorrect = false;
+
+        while (!isCorrect) {
+            int userGuess = getUserGuess();
+            if (userGuess == randomNumber) {
+                System.out.println("correct guess.");
+                isCorrect = true;
+                correctGuessCount++;
+            } else if (userGuess < randomNumber) {
+                System.out.println("too small.");
+            } else {
+                System.out.println("too large.");
+            }
+        }
+
+        askToRestart();
+    }
+
+    public static int generateRandomNumber(int min, int max) {
+        return (int) (Math.random() * (max - min + 1) + min);
+    }
+
+    public static int getUserGuess() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your guess (between 1 and 100): ");
+        return scanner.nextInt();
+    }
+
+    public static void askToRestart() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Do you want to play again? (yes/no): ");
+        String choice = scanner.nextLine();
+        if (choice.equalsIgnoreCase("yes")) {
+            playGame();
+        } else {
+            System.out.println("Thank you for playing. Goodbye!");
+            System.out.println("Number of times the user guessed correctly is " + correctGuessCount);
+        }
+    }
+}
